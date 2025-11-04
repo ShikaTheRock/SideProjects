@@ -1,3 +1,5 @@
+#TO DO: Hacer que se pueda toca los numeros y las operaciones con el teclado 
+
 import tkinter as tk
 from tkinter import messagebox
 
@@ -12,7 +14,7 @@ color_button_equal = '#4caf50'
 color_button_clear = '#072323'
 
 screen_text = tk.StringVar()
-screen_label = tk.Label(root, textvariable=screen_text, font=('Arial', 30), bg='#ffffff', fg=color_text, anchor='e', padx=10)
+screen_label = tk.Label(root, textvariable=screen_text, font=('Arial', 20), bg='#ffffff', fg=color_text, anchor='e', padx=10)
 screen_label.grid(row=1, column=0, columnspan=4, sticky='we', pady=5)
 
 #Historial
@@ -34,6 +36,19 @@ def press(number):
     expression += str(number)
     screen_text.set(expression)
 
+def lenCheck():
+    if len(history) >= 2:
+        return 1
+    else:
+        return 0
+
+def backCheck():
+    if len(history) >= 1:
+        return 1
+    else:
+        return 0
+
+
 def clear():
     global expression
     global history
@@ -45,6 +60,9 @@ def clear():
 def back():
     global expression
     global history
+    if backCheck() == 0:
+        messagebox.showerror(title="ERROR 10", detail="No suficiente stack")
+        clear()
     screen_text.set('')
     expression = ''
     history.reverse()
@@ -52,10 +70,15 @@ def back():
     history.reverse()
     update_history()
 
+def backsp():
+    global expression
+    expression = expression[:-1]
+    screen_text.set(expression)
+
 def equalpress():
     try:
         global expression
-        result = str(eval(expression))
+        result = str(expression)
 
         #historial
         history.append(f"{expression}")
@@ -68,12 +91,6 @@ def equalpress():
         #clear()
         screen_text.set('')
         expression = ''
-
-def lenCheck():
-    if len(history) >= 2:
-        return 1
-    else:
-        return 0
 
 def remops():
     history.reverse()
@@ -167,26 +184,29 @@ for (text, row, col) in buttons:
                          command=lambda t=text: press(t))
     button.grid(row=row, column=col, padx=5, pady=5, sticky='nsew')
 
-slash_button = tk.Button(root, text='/', width=5, height=2, font=('Arial', 18), bg=color_button, fg='#000000', command=slashpress)
+slash_button = tk.Button(root, text='/', width=5, height=2, font=('Arial', 20), bg=color_button, fg='#000000', command=slashpress)
 slash_button.grid(row=2, column=3, padx=5, pady=5, sticky='nsew')
 
-mult_button = tk.Button(root, text='*', width=5, height=2, font=('Arial', 18), bg=color_button, fg='#000000', command=multpress)
+mult_button = tk.Button(root, text='*', width=5, height=2, font=('Arial', 20), bg=color_button, fg='#000000', command=multpress)
 mult_button.grid(row=3, column=3, padx=5, pady=5, sticky='nsew')
 
-plus_button = tk.Button(root, text='+', width=5, height=2, font=('Arial', 18), bg=color_button, fg='#000000', command=pluspress)
+plus_button = tk.Button(root, text='+', width=5, height=2, font=('Arial', 20), bg=color_button, fg='#000000', command=pluspress)
 plus_button.grid(row=4, column=3, padx=5, pady=5, sticky='nsew')
 
-minus_button = tk.Button(root, text='-', width=5, height=2, font=('Arial', 18), bg=color_button, fg='#000000', command=minuspress)
+minus_button = tk.Button(root, text='-', width=5, height=2, font=('Arial', 20), bg=color_button, fg='#000000', command=minuspress)
 minus_button.grid(row=5, column=2, padx=5, pady=5, sticky='nsew')
 
-equal_button = tk.Button(root, text='=', width=5, height=2, font=('Arial', 18), bg=color_button_equal, fg='#000000', command=equalpress)
+equal_button = tk.Button(root, text='=', width=5, height=2, font=('Arial', 20), bg=color_button_equal, fg='#000000', command=equalpress)
 equal_button.grid(row=5, column=3, padx=5, pady=5, sticky='nsew')
 
-clear_button = tk.Button(root, text='C', width=5, height=2, font=('Arial', 18), bg=color_button_clear, fg='#ffffff', command=clear)
+clear_button = tk.Button(root, text='AC', width=5, height=2, font=('Arial', 20), bg=color_button_clear, fg='#ffffff', command=clear)
 clear_button.grid(row=6, column=0, columnspan=2, padx=5, pady=5, sticky='nsew')
 
-back_button = tk.Button(root, text='<_', width=5, height=2, font=('Arial', 18), bg=color_button_clear, fg='#ffffff', command=back)
-back_button.grid(row=6, column=2, columnspan=2, padx=5, pady=5, sticky='nsew')
+back_button = tk.Button(root, text='C', width=5, height=2, font=('Arial', 20), bg=color_button_clear, fg='#ffffff', command=back)
+back_button.grid(row=6, column=2, columnspan=1, padx=5, pady=5, sticky='nsew')
+
+backsp_button = tk.Button(root, text='<_', width=5, height=2, font=('Arial', 20), bg=color_button_clear, fg='#ffffff', command=backsp)
+backsp_button.grid(row=6, column=3, columnspan=1, padx=5, pady=5, sticky='nsew')
 
 for op in range(7):
     root.grid_rowconfigure(op, weight=1)
