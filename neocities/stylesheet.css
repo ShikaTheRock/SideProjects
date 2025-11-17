@@ -132,15 +132,14 @@ body /*what do you think? xd*/ {
 
 .right /* right side panel */ {
     position: absolute;
-    top:220px;
-    /* my dear reader, you may find yourself wondering why the right panel has "top: 171px", and why the left panel does not. that is an absolutely fantastic question, and I hope to find the answer one day too. removing this line from the right panel breaks it, but on the left panel, it doesn't seem to affect it. I do not understand css. */
+    top:230px;
     right:40px;
     min-width: 13%;
     max-width: 13%;
 }
 
 .left /* left side panel */ {
-    top:220px;
+    top:230px;
     position: absolute;
     left:40px;
     min-width: 13%;
