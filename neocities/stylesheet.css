@@ -146,6 +146,14 @@ body /*what do you think? xd*/ {
     max-width: 13%;
 }
 
+.moonFhase /* left side panel */ {
+    position: static;
+    object-fit: cover;
+    left: 70px;
+    width: 200px;
+}
+
+
 .border /*title for main content and side panels*/ {
     background-color:#2d2a30;
     margin: 0px;
