@@ -1,0 +1,311 @@
+/*THIS IS A COPY OF THE https://cyuucat.moe/index.html WEB, THIS IS NOT MINE, IS STOLEN, N O T  M I N E*/
+
+body /*what do you think? xd*/ {
+    background-color: #100f12;
+    margin: auto;
+    padding:20px 25px 25px 25px;
+    text-align: center;
+    font-family:"Mono", "Consolas", "MS PGothic", sans-serif;
+    /*fun fact! I tried to add "font-size: 20px" here, and it proceeded to scoot down the titletext by one pixel, if even that. yeah, I don't even know.*/
+}
+
+/* hides side banners below a certain screen size*/
+@media screen and (max-width: 1000px) {
+  [hide] {
+        display: none !important;
+  }
+  [expand] {
+      min-width:90% !important;
+      max-width:90% !important;
+  }
+}
+
+@media expand and (max-width: 1000px) {
+  [expand] {
+      min-width:100% !important;
+      max-width:100% !important;
+  }
+}
+
+
+/*ALL DIV CLASSES ARE BELOW HERE*/
+.box /* top nav section */ {
+    margin-top: 20px;
+    margin-bottom: 35px;
+}
+
+/*Lo del tema de los blinkies*/
+.blinkiewall {
+  border-top-width: 3px;
+  border-top-color: #2d2a30;
+  border-top-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: #2d2a30;
+  border-bottom-style: solid;
+  margin: 0;
+  padding: 0em;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.buttons {
+  display: inline-block;
+  animation: 100s slide infinite linear;
+  font-size: 0%;
+}
+
+.button {
+  padding: 5px;
+  text-align: center;
+  font-size: 0px;
+}
+
+.bigbutton {
+  display: block;
+  width: 75%;
+  height: 75%;
+  margin: auto;
+  padding: 0px;
+  image-rendering: pixelated
+}
+
+
+.blinkiewall:hover .buttons {
+  animation-play-state: paused;
+}
+
+@keyframes slide {
+  from{
+    transform: translateX(0);
+  }
+  to{
+    transform: translateX(-100%);
+  }
+}
+
+.blinkiewall img {
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  height: 30px;
+}
+
+
+
+.actualstuff /* content */ {
+    border :#2d2a30 solid 3px;
+    padding: 0px;
+    margin: auto;
+    margin-top: 10px;
+    min-height:20%;
+    min-width:60%;
+    max-width:67%;
+
+}
+
+.picturebox /* picture boxes on the pics page */ {
+    border: #2d2a30 solid 3px;
+    padding: 0px;
+    margin: 10px;
+    max-width:270px;
+    max-height:297px;
+}
+
+.flexContainer /* picture boxes on the pics page */ {
+    padding: 0px;
+    margin: auto;
+    min-height:20%;
+    min-width:60%;
+    max-width:70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+}
+
+.aesthetic /* side panels */ {
+    border: #2d2a30 solid 3px;
+    overflow-x: hidden; /* prevents image spilling out of box */
+    margin-bottom:30px;
+    padding:0px;
+}
+
+
+.right /* right side panel */ {
+    position: absolute;
+    top:220px;
+    /* my dear reader, you may find yourself wondering why the right panel has "top: 171px", and why the left panel does not. that is an absolutely fantastic question, and I hope to find the answer one day too. removing this line from the right panel breaks it, but on the left panel, it doesn't seem to affect it. I do not understand css. */
+    right:40px;
+    min-width: 13%;
+    max-width: 13%;
+}
+
+.left /* left side panel */ {
+    top:220px;
+    position: absolute;
+    left:40px;
+    min-width: 13%;
+    max-width: 13%;
+}
+
+.border /*title for main content and side panels*/ {
+    background-color:#2d2a30;
+    margin: 0px;
+    border: 2px solid #2d2a30;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis "";
+}
+
+.aestheticimage {
+    /*these four lines below make it so you never see any part of the background ever*/
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display:block; /* fixes the issue with the tiny sliver of background*/
+    z-index:-4; /*THIS MAY FUCK WITH THINGS LATER*/
+}
+
+.emote {
+    height:26px;
+    vertical-align:middle;
+    border-radius:4px;
+}
+
+.leftalign {
+    text-align:left;
+    margin: 13px 20px 13px 20px;
+}
+
+.inline {
+    padding: 10px;
+}
+
+/* ANYTHING RELATED TO TEXT IS BELOW HERE */
+p {
+    margin: 13px 40px 13px 50px;
+    font-size:20px;
+    color: #dfdfdf;
+    text-align:left;
+    line-height:1.1;
+}
+
+nav {
+    margin: 13px 20px 13px 20px;
+    font-size:20px;
+    color: #c4b6d1;
+    text-align:center;
+}
+
+h1 {
+    color: white;
+    font-size:50px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 7px white;
+    animation; 
+    color:white;
+}
+
+h2 {
+    margin-bottom: 5px;
+    font-size:30px;
+    margin-top: 7px;
+    color:white;
+}
+
+h4 {
+    margin: 30px 30px 10px 30px;
+    font-size:24px;
+    color:white;
+    font-weight:bold;
+    text-align:left;
+}
+
+h5 {
+    margin-bottom: 5px;
+    font-size:20px;
+    margin-top: 7px;
+    color:white;
+    font-weight:bold;
+}
+
+summary {
+    font-size:20px;
+    color: white;
+    font-weight:bold
+}
+
+b {
+    color:white;
+}
+
+titletext {
+    margin:10px 10px 10px 5px;
+    font-size:20px;
+    color: white;
+    font-weight: bold;
+}
+
+
+@font-face {
+    font-family: Mono;
+    src: url('ShareTechMono.ttf');
+}
+
+
+a:link {
+    color: #d03169;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #d03169;
+    text-decoration: none;
+}
+
+button {
+    font-family: "Mono", "Consolas", "MS PGothic", sans-serif;
+    background-color: transparent;
+    border: #3d2e47 solid 0px;
+    /*margin: 10px;
+    padding:4px 20px 4px 20px;*/
+}
+
+hr {
+    border: #908290 dashed 1px;
+    margin:20px;
+    border-radius:2px;
+}
+
+/* CURSOR BLINK EFFECT IN TITLE */
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+
+@keyframes blinker {
+    0% { opacity: 1; }
+    49% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+
+pre code {
+    background-color: #18151e;
+    color: white;
+    border: 2px solid #a753a2;
+    display: block;
+    padding: 20px;
+    border-radius:2px;
+    font-size:18px;
+    overflow: scroll;
+}
+
+
+comment {
+    /* gray */
+    color: #7c7683
+}
+

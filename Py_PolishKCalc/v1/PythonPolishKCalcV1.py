@@ -1,6 +1,7 @@
 #TO DO: 
 #Hacer que se pueda toca los numeros y las operaciones con el teclado 
 #Cambiar colores
+# añadir posicion del numero en la pila 
 
 import tkinter as tk
 from tkinter import messagebox
