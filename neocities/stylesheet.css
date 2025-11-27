@@ -131,6 +131,13 @@ body /*what do you think? xd*/ {
     padding:0px;
 }
 
+.aestheticounter /* side panels */ {
+    /* border: #2d2a30 solid 3px; */
+    width: 90%;
+    margin-bottom:10px;
+    padding:0px;
+}
+
 .aestheticmoon /* side panels */ {
     overflow-x: hidden; /* prevents image spilling out of box */
     margin-bottom:30px;
