@@ -1,4 +1,6 @@
 /*THIS IS A COPY OF THE https://cyuucat.moe/index.html WEB, THIS IS NOT MINE, IS STOLEN, N O T  M I N E*/
+/* crt effect */
+
 
 body /*what do you think? xd*/ {
     background-color: #100f12;
@@ -50,7 +52,7 @@ body /*what do you think? xd*/ {
 
 .buttons {
   display: inline-block;
-  animation: 100s slide infinite linear;
+  animation: 30s slide infinite linear;
   font-size: 0%;
 }
 
@@ -89,7 +91,7 @@ body /*what do you think? xd*/ {
   padding-bottom: 5px;
   height: 30px;
 }
-
+/*Lo del tema de los blinkies fin*/
 
 
 .actualstuff /* content */ {
@@ -125,32 +127,39 @@ body /*what do you think? xd*/ {
 .aesthetic /* side panels */ {
     border: #2d2a30 solid 3px;
     overflow-x: hidden; /* prevents image spilling out of box */
+    margin-bottom:10px;
+    padding:0px;
+}
+
+.aestheticmoon /* side panels */ {
+    overflow-x: hidden; /* prevents image spilling out of box */
     margin-bottom:30px;
     padding:0px;
 }
 
-
 .right /* right side panel */ {
     position: absolute;
-    top:230px;
+    top:257px;
     right:40px;
     min-width: 13%;
     max-width: 13%;
 }
 
 .left /* left side panel */ {
-    top:230px;
+    top:257px;
     position: absolute;
     left:40px;
     min-width: 13%;
     max-width: 13%;
 }
 
-.moonFhase /* left side panel */ {
-    position: static;
-    object-fit: cover;
-    left: 70px;
-    width: 200px;
+.linkborder /*title for links*/ {
+    background-color:#2d2a30;
+    margin: 0px;
+    border: 2px solid #2d2a30;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis "";
 }
 
 
@@ -212,6 +221,23 @@ h1 {
     animation; 
     color:white;
 }
+.color_me {
+    color: #717dff;
+    font-size:50px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 7px #717dff;
+    animation; 
+    color: #717dff;
+}
+
+/* CURSOR BLINK EFFECT IN TITLE */
+.blink_me {
+  animation: blinker 1s linear infinite;
+  color: #717dff;
+  text-shadow: 2px 2px 7px #717dff;
+}
+
 
 h2 {
     margin-bottom: 5px;
@@ -261,12 +287,12 @@ titletext {
 
 
 a:link {
-    color: #d03169;
+    color: #ada9ff;
     text-decoration: underline;
 }
 
 a:visited {
-    color: #d03169;
+    color: #ce92f5;
     text-decoration: none;
 }
 
@@ -282,11 +308,6 @@ hr {
     border: #908290 dashed 1px;
     margin:20px;
     border-radius:2px;
-}
-
-/* CURSOR BLINK EFFECT IN TITLE */
-.blink_me {
-  animation: blinker 1s linear infinite;
 }
 
 
@@ -316,3 +337,97 @@ comment {
     color: #7c7683
 }
 
+.crt::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+@keyframes flicker {
+  0% {
+  opacity: 0.27861;
+  }
+  5% {
+  opacity: 0.34769;
+  }
+  10% {
+  opacity: 0.23604;
+  }
+  15% {
+  opacity: 0.90626;
+  }
+  20% {
+  opacity: 0.18128;
+  }
+  25% {
+  opacity: 0.83891;
+  }
+  30% {
+  opacity: 0.65583;
+  }
+  35% {
+  opacity: 0.67807;
+  }
+  40% {
+  opacity: 0.26559;
+  }
+  45% {
+  opacity: 0.84693;
+  }
+  50% {
+  opacity: 0.96019;
+  }
+  55% {
+  opacity: 0.08594;
+  }
+  60% {
+  opacity: 0.20313;
+  }
+  65% {
+  opacity: 0.71988;
+  }
+  70% {
+  opacity: 0.53455;
+  }
+  75% {
+  opacity: 0.37288;
+  }
+  80% {
+  opacity: 0.71428;
+  }
+  85% {
+  opacity: 0.70419;
+  }
+  90% {
+  opacity: 0.7003;
+  }
+  95% {
+  opacity: 0.36108;
+  }
+  100% {
+  opacity: 0.24387;
+  }
+}
+
+.crt::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(18, 16, 16, 0.1);
+  opacity: 20%;
+  z-index: 2;
+  pointer-events: none;
+  animation: flicker 0.1s infinite;
+}
+/* crt effect fin */
