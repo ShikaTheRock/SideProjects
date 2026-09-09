@@ -31,10 +31,7 @@ body /*what do you think? xd*/ {
 
 
 /*ALL DIV CLASSES ARE BELOW HERE*/
-.box /* top nav section */ {
-    margin-top: 20px;
-    margin-bottom: 35px;
-}
+
 
 /*Lo del tema de los blinkies*/
 .blinkiewall {
@@ -93,6 +90,25 @@ body /*what do you think? xd*/ {
 }
 /*Lo del tema de los blinkies fin*/
 
+/*Statuscafe*/
+#statuscafe {
+    padding: .5em;
+    background-color: azure;
+    border: 1px solid midnightblue;
+}
+#statuscafe-username {
+    margin-bottom: .5em;
+}
+#statuscafe-content {
+    margin: 0 1em 0.5em 1em;
+}
+/*Statuscafe FIN*/
+
+.box /* top nav section */ {
+    justify-content:center;
+    margin-top: 20px;
+    margin-bottom: 35px;
+}
 
 .actualstuff /* content */ {
     border :#2d2a30 solid 3px;
@@ -131,13 +147,6 @@ body /*what do you think? xd*/ {
     padding:0px;
 }
 
-.aestheticounter /* side panels */ {
-    /* border: #2d2a30 solid 3px; */
-    width: 90%;
-    margin-bottom:10px;
-    padding:0px;
-}
-
 .aestheticmoon /* side panels */ {
     overflow-x: hidden; /* prevents image spilling out of box */
     margin-bottom:30px;
@@ -146,14 +155,14 @@ body /*what do you think? xd*/ {
 
 .right /* right side panel */ {
     position: absolute;
-    top:257px;
+    top:290px;
     right:40px;
     min-width: 13%;
     max-width: 13%;
 }
 
 .left /* left side panel */ {
-    top:257px;
+    top:290px;
     position: absolute;
     left:40px;
     min-width: 13%;
@@ -214,7 +223,7 @@ p {
 
 nav {
     margin: 13px 20px 13px 20px;
-    font-size:20px;
+    font-size:25px;
     color: #c4b6d1;
     text-align:center;
 }

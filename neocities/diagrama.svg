@@ -1,0 +1,96 @@
+<svg viewBox="0 0 900 650" xmlns="http://www.w3.org/2000/svg" style="background:#080812; border-radius: 8px; font-family:'DM Sans', sans-serif;">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=DM+Sans:wght@400;700&amp;display=swap');
+    
+    .table-bg { fill: rgba(26, 0, 53, 0.9); stroke: #a855f7; stroke-width: 2; }
+    .header-bg { fill: #7e22ce; }
+    .header-text { fill: #ffffff; font-family: 'Press Start 2P', monospace; font-size: 10px; text-anchor: middle; }
+    .field-text { fill: #f5f0ff; font-size: 12px; }
+    .pk-label { fill: #c084fc; font-weight: bold; font-family: 'Press Start 2P', monospace; font-size: 8px; }
+    .fk-label { fill: #a855f7; font-weight: bold; font-family: 'Press Start 2P', monospace; font-size: 8px; }
+    
+    .neon-line { 
+      stroke: #a855f7; 
+      stroke-width: 2.5; 
+      fill: none; 
+      filter: drop-shadow(0 0 6px #a855f7);
+    }
+
+    .cardinality { font-family: 'Press Start 2P', monospace; font-size: 7px; fill: #ffffff; }
+  </style>
+
+  <defs>
+    <marker id="arrow-neon" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7" />
+    </marker>
+  </defs>
+
+  <g transform="translate(50, 50)">
+    <rect class="table-bg" width="170" height="135" rx="4" />
+    <rect class="header-bg" width="170" height="30" rx="4" />
+    <text x="85" y="20" class="header-text">CLIENTES</text>
+    <text x="15" y="55" class="pk-label">PK</text> <text x="45" y="55" class="field-text">id_cliente</text>
+    <text x="15" y="80" class="field-text">nombre_empresa</text>
+    <text x="15" y="100" class="field-text">email_contacto</text>
+    <text x="15" y="120" class="field-text">ciudad_pais</text>
+  </g>
+
+  <g transform="translate(50, 280)">
+    <rect class="table-bg" width="170" height="120" rx="4" />
+    <rect class="header-bg" width="170" height="30" rx="4" />
+    <text x="85" y="20" class="header-text">FACTURAS</text>
+    <text x="15" y="55" class="pk-label">PK</text> <text x="45" y="55" class="field-text">id_factura</text>
+    <text x="15" y="75" class="fk-label">FK</text> <text x="45" y="75" class="field-text">id_cliente</text>
+    <text x="15" y="95" class="field-text">total_importe</text>
+  </g>
+
+  <g transform="translate(350, 40)">
+    <rect class="table-bg" width="200" height="160" rx="4" />
+    <rect class="header-bg" width="200" height="30" rx="4" />
+    <text x="100" y="20" class="header-text">PROYECTOS</text>
+    <text x="15" y="55" class="pk-label">PK</text> <text x="45" y="55" class="field-text">id_proyecto</text>
+    <text x="15" y="75" class="fk-label">FK</text> <text x="45" y="75" class="field-text">id_cliente</text>
+    <text x="15" y="100" class="field-text">titulo_proyecto</text>
+    <text x="15" y="120" class="field-text">estado_dev</text>
+    <text x="15" y="140" class="field-text">deadline</text>
+  </g>
+
+  <g transform="translate(350, 280)">
+    <rect class="table-bg" width="200" height="130" rx="4" />
+    <rect class="header-bg" width="200" height="30" rx="4" />
+    <text x="100" y="20" class="header-text">PARTES_TRAB</text>
+    <text x="15" y="55" class="pk-label">PK</text> <text x="45" y="55" class="field-text">id_parte</text>
+    <text x="15" y="75" class="fk-label">FK</text> <text x="45" y="75" class="field-text">id_proyecto</text>
+    <text x="15" y="95" class="fk-label">FK</text> <text x="45" y="95" class="field-text">id_trabajador</text>
+    <text x="15" y="115" class="field-text">horas_log</text>
+  </g>
+
+  <g transform="translate(670, 50)">
+    <rect class="table-bg" width="180" height="135" rx="4" />
+    <rect class="header-bg" width="180" height="30" rx="4" />
+    <text x="90" y="20" class="header-text">TRABAJADORES</text>
+    <text x="15" y="55" class="pk-label">PK</text> <text x="45" y="55" class="field-text">id_trabajador</text>
+    <text x="15" y="80" class="field-text">nombre_alias</text>
+    <text x="15" y="100" class="field-text">especialidad</text>
+    <text x="15" y="120" class="field-text">github_user</text>
+  </g>
+
+  <g transform="translate(670, 280)">
+    <rect class="table-bg" width="180" height="120" rx="4" />
+    <rect class="header-bg" width="180" height="30" rx="4" />
+    <text x="90" y="20" class="header-text">AGENDA</text>
+    <text x="15" y="55" class="pk-label">PK</text> <text x="45" y="55" class="field-text">id_evento</text>
+    <text x="15" y="75" class="fk-label">FK</text> <text x="45" y="75" class="field-text">id_trabajador</text>
+    <text x="15" y="100" class="field-text">fecha_reunion</text>
+  </g>
+
+  <path d="M 220 110 L 340 110" class="neon-line" marker-end="url(#arrow-neon)" />
+  <text x="270" y="100" class="cardinality">1:N</text>
+
+  <path d="M 670 110 L 560 110" class="neon-line" marker-end="url(#arrow-neon)" />
+  <text x="600" y="100" class="cardinality">1:N</text>
+
+  <path d="M 135 185 L 135 270" class="neon-line" marker-end="url(#arrow-neon)" />
+  <path d="M 450 200 L 450 270" class="neon-line" marker-end="url(#arrow-neon)" />
+  <path d="M 760 185 L 760 270" class="neon-line" marker-end="url(#arrow-neon)" />
+</svg>

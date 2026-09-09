@@ -9,5 +9,17 @@
   <body>
     <h1>Page Not Found</h1>
     <p>The requested page was not found.</p>
+    <div id="statuscafe"><div id="statuscafe-username"></div><div id="statuscafe-content"></div></div><script>
+fetch("https://status.cafe/users/shika/status.json")
+  .then( r => r.json() )
+  .then( r => {
+    if (!r.content.length) {
+      document.getElementById("statuscafe-content").innerHTML = "No hay estado todavía."
+      return
+}
+    document.getElementById("statuscafe-username").innerHTML = '<a href="https://status.cafe/users/shika" target="_blank">' + r.author + '</a> ' + r.face + ' ' + r.timeAgo
+    document.getElementById("statuscafe-content").innerHTML = r.content
+  })
+</script>
   </body>
 </html>

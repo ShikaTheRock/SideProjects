@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TYPE &amp; FIX — You Type, We Fix</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--pp-dark:#1a0035;--pp-mid:#7e22ce;--pp-bright:#a855f7;--pp-neon:#c084fc;--pp-light:#e9d5ff;--pp-pale:#f5f0ff;--white:#fff;--black:#080812;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+.amb-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(168,85,247,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(168,85,247,.06) 1px,transparent 1px);background-size:44px 44px;animation:diagGrid 18s linear infinite;pointer-events:none;}
+@keyframes diagGrid{0%{background-position:0 0;}100%{background-position:44px 44px;}}
+.particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.p{position:absolute;border-radius:50%;opacity:0;animation:pfloat var(--d,8s) var(--delay,0s) ease-in-out infinite;}
+@keyframes pfloat{0%{opacity:0;transform:translate(0,0);}20%{opacity:.5;}80%{opacity:.2;}100%{opacity:0;transform:translate(var(--tx,20px),var(--ty,-100px));}}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(8,8,18,.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(168,85,247,.3);display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:60px;transition:background .3s;}
+.nav-logo{font-family:'Press Start 2P',monospace;font-size:12px;color:var(--white);text-decoration:none;animation:logoGlow 3s ease-in-out infinite alternate;}
+@keyframes logoGlow{from{text-shadow:0 0 4px rgba(168,85,247,0);}to{text-shadow:0 0 22px rgba(168,85,247,.9),0 0 44px rgba(168,85,247,.3);}}
+.nav-logo span{color:var(--pp-bright);}
+.nav-links{display:flex;gap:1.5rem;list-style:none;}
+.nav-links a{color:rgba(233,213,255,.7);text-decoration:none;font-size:11px;font-weight:500;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--pp-bright);transition:width .25s ease;}
+.nav-links a:hover{color:var(--pp-neon);}
+.nav-links a:hover::after{width:100%;}
+.hero{min-height:100vh;background:var(--pp-dark);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:8rem 5rem 5rem;position:relative;overflow:hidden;}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;animation:orbF 9s ease-in-out infinite alternate;}
+.orb1{width:500px;height:500px;background:rgba(126,34,206,.3);top:-150px;right:-150px;}
+.orb2{width:320px;height:320px;background:rgba(168,85,247,.18);bottom:-50px;left:5%;animation-delay:-3.5s;}
+.orb3{width:220px;height:220px;background:rgba(192,132,252,.12);top:35%;right:15%;animation-delay:-6s;}
+@keyframes orbF{from{transform:translate(0,0) scale(1);}to{transform:translate(35px,-35px) scale(1.12);}}
+.hero-tag{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--pp-bright);border:1px solid rgba(168,85,247,.5);background:rgba(168,85,247,.08);padding:8px 14px;margin-bottom:2rem;display:inline-flex;align-items:center;gap:8px;position:relative;z-index:1;animation:tagB 2s step-end infinite;}
+.hero-tag::before{content:'';width:6px;height:6px;background:var(--pp-bright);border-radius:50%;animation:dot 1.5s ease-in-out infinite;}
+@keyframes dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.6);}}
+@keyframes tagB{0%,100%{border-color:rgba(168,85,247,.5);}50%{border-color:rgba(168,85,247,.1);}}
+.hero h1{font-family:'Press Start 2P',monospace;font-size:clamp(44px,9vw,100px);color:var(--white);line-height:1.1;margin-bottom:.8rem;position:relative;z-index:1;}
+.hero h1 .amp{color:var(--pp-bright);display:inline-block;animation:ampW 4s ease-in-out infinite;}
+@keyframes ampW{0%,100%{transform:rotate(0);}25%{transform:rotate(-4deg);}75%{transform:rotate(4deg);}}
+.hero-sub{font-family:'Press Start 2P',monospace;font-size:clamp(9px,1.5vw,13px);color:var(--pp-light);margin-bottom:2.5rem;position:relative;z-index:1;display:flex;align-items:center;gap:10px;opacity:.85;}
+.hero-sub .box{background:var(--pp-mid);color:var(--white);padding:6px 10px;font-size:9px;}
+.cta-row{display:flex;gap:1rem;flex-wrap:wrap;position:relative;z-index:1;}
+.btn{font-family:'Press Start 2P',monospace;font-size:10px;padding:14px 24px;border:2px solid transparent;cursor:pointer;text-decoration:none;display:inline-block;position:relative;overflow:hidden;transition:all .2s;}
+.btn::before{content:'';position:absolute;inset:0;transform:translateX(-100%);transition:transform .3s ease;}
+.btn:hover::before{transform:translateX(0);}
+.btn-primary{background:var(--pp-bright);color:var(--black);border-color:var(--pp-bright);}
+.btn-primary::before{background:rgba(255,255,255,.15);}
+.btn-primary:hover{box-shadow:0 0 30px rgba(168,85,247,.6);}
+.btn-ghost{background:transparent;color:var(--pp-light);border-color:rgba(168,85,247,.5);}
+.btn-ghost::before{background:rgba(168,85,247,.1);}
+.btn-ghost:hover{color:var(--white);border-color:var(--pp-bright);}
+.hero-stats{display:flex;gap:2.5rem;flex-wrap:wrap;position:relative;z-index:1;margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(168,85,247,.2);}
+.hstat-num{font-family:'Press Start 2P',monospace;font-size:22px;color:var(--pp-bright);display:block;margin-bottom:4px;transition:text-shadow .3s;}
+.hstat:hover .hstat-num{text-shadow:0 0 20px var(--pp-bright);}
+.hstat-label{font-size:11px;color:var(--pp-light);opacity:.6;}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:1;animation:bounce 2s ease-in-out infinite;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+.scroll-hint span{font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(168,85,247,.4);}
+.scroll-arrow{width:14px;height:14px;border-right:2px solid var(--pp-bright);border-bottom:2px solid var(--pp-bright);transform:rotate(45deg);}
+.px-div{height:6px;background:repeating-linear-gradient(90deg,var(--pp-bright) 0,var(--pp-bright) 12px,var(--pp-mid) 12px,var(--pp-mid) 24px,var(--pp-dark) 24px,var(--pp-dark) 36px,var(--pp-mid) 36px,var(--pp-mid) 48px);animation:divS 4s linear infinite;}
+@keyframes divS{from{background-position:0;}to{background-position:48px;}}
+section{position:relative;z-index:1;}
+.wrap{max-width:1180px;margin:0 auto;}
+.sec{padding:6rem 4rem;}
+.sec-dark{background:var(--pp-dark);}
+.sec-black{background:var(--black);}
+.sec-pale{background:var(--pp-pale);}
+.sec-tag{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;color:var(--pp-mid);display:flex;align-items:center;gap:10px;margin-bottom:.7rem;}
+.sec-tag::before{content:'//';color:var(--pp-bright);}
+.sec-dark .sec-tag,.sec-black .sec-tag{color:rgba(233,213,255,.5);}
+.sec-dark .sec-tag::before,.sec-black .sec-tag::before{color:var(--pp-bright);}
+.sec-title{font-family:'Press Start 2P',monospace;font-size:clamp(15px,2.2vw,24px);line-height:1.5;margin-bottom:3rem;}
+.sec-dark .sec-title,.sec-black .sec-title{color:var(--white);}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1px;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.2);}
+.svc{background:var(--white);padding:2rem 1.8rem;position:relative;overflow:hidden;transition:background .3s;cursor:default;}
+.svc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--pp-bright);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;}
+.svc:hover::after{transform:scaleX(1);}
+.svc:hover{background:var(--pp-dark);}
+.svc:hover .svc-n{color:var(--pp-bright);text-shadow:0 0 20px var(--pp-bright);}
+.svc:hover .svc-title{color:var(--white);}
+.svc:hover .svc-li{color:rgba(233,213,255,.8);}
+.svc-n{font-family:'Press Start 2P',monospace;font-size:26px;color:var(--pp-light);display:block;margin-bottom:1rem;transition:all .3s;}
+.svc-title{font-family:'Press Start 2P',monospace;font-size:10px;line-height:1.9;margin-bottom:.8rem;transition:color .3s;}
+.svc-list{list-style:none;}
+.svc-li{font-size:13px;color:#555;line-height:1.7;padding-left:1rem;position:relative;transition:color .3s;}
+.svc-li::before{content:'▸';position:absolute;left:0;color:var(--pp-bright);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.info-card{background:rgba(168,85,247,.07);border-left:3px solid var(--pp-bright);padding:1.3rem 1.6rem;margin-bottom:.9rem;transition:background .25s,transform .25s;cursor:default;}
+.info-card:hover{background:rgba(168,85,247,.14);transform:translateX(6px);}
+.info-card h4{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--pp-bright);margin-bottom:.6rem;line-height:1.9;}
+.info-card p,.info-card li{font-size:13px;color:var(--pp-light);line-height:1.7;}
+.info-card ul{padding-left:1rem;}
+.info-card strong{color:var(--pp-neon);}
+.stats-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(168,85,247,.2);margin-top:2rem;border:1px solid rgba(168,85,247,.2);}
+.sm-cell{background:rgba(168,85,247,.07);padding:1.3rem;text-align:center;}
+.sm-num{font-family:'Press Start 2P',monospace;font-size:18px;color:var(--pp-bright);}
+.sm-label{font-size:11px;color:rgba(233,213,255,.6);margin-top:.3rem;}
+.equip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;}
+.equip-zone{background:rgba(168,85,247,.05);border:1px solid rgba(168,85,247,.2);padding:1.8rem;transition:border-color .3s,transform .3s;cursor:default;}
+.equip-zone:hover{border-color:var(--pp-bright);transform:translateY(-4px);}
+.equip-zone-title{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--pp-bright);margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid rgba(168,85,247,.2);line-height:1.8;}
+.equip-item{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:.55rem 0;border-bottom:1px solid rgba(168,85,247,.07);font-size:13px;}
+.equip-item:last-child{border-bottom:none;}
+.equip-name{color:var(--pp-light);}
+.equip-model{color:#666;font-size:11px;}
+.equip-qty{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--pp-bright);min-width:22px;text-align:right;}
+.phases{display:flex;flex-direction:column;}
+.phase{display:grid;grid-template-columns:110px 1fr;border-bottom:1px solid rgba(168,85,247,.15);transition:background .25s;cursor:default;}
+.phase:last-child{border-bottom:none;}
+.phase:hover{background:rgba(168,85,247,.05);}
+.phase-num{background:linear-gradient(180deg,var(--pp-mid),var(--pp-dark));padding:1.3rem .8rem;font-family:'Press Start 2P',monospace;font-size:7px;color:var(--white);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:.4rem;text-align:center;}
+.ph-n{font-size:24px;color:var(--pp-bright);display:block;}
+.ph-days{font-size:6px;color:rgba(233,213,255,.5);}
+.phase-body{padding:1.3rem 1.8rem;}
+.phase-title{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--pp-bright);margin-bottom:.7rem;line-height:1.8;}
+.phase-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.5rem;}
+.ptag{font-size:11px;background:rgba(168,85,247,.1);padding:3px 9px;transition:background .2s;}
+.phase:hover .ptag{background:rgba(168,85,247,.18);}
+.phase-who{font-family:'Press Start 2P',monospace;font-size:6px;color:rgba(168,85,247,.55);}
+.crono-wrap{background:rgba(0,0,0,.4);border:1px solid rgba(168,85,247,.3);padding:1.8rem;margin-top:2rem;font-family:'Press Start 2P',monospace;font-size:7.5px;color:var(--pp-light);line-height:2.4;}
+.crono-week{color:var(--pp-bright);display:block;margin-top:.7rem;}
+.crono-hito{color:var(--pp-neon);}
+.norm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;}
+.norm-card{background:var(--white);border:1px solid rgba(168,85,247,.15);border-top:4px solid var(--pp-bright);padding:1.8rem 1.4rem;transition:transform .25s,box-shadow .25s;cursor:default;}
+.norm-card:hover{transform:translateY(-5px);box-shadow:0 10px 35px rgba(168,85,247,.12);}
+.norm-code{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--pp-mid);margin-bottom:.5rem;}
+.norm-name{font-weight:700;font-size:13px;margin-bottom:.5rem;color:var(--pp-dark);}
+.norm-desc{font-size:12px;color:#666;line-height:1.7;}
+.sost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem;}
+.sost-card{background:var(--pp-dark);border-left:3px solid var(--pp-bright);padding:1.6rem;transition:transform .25s;cursor:default;}
+.sost-card:hover{transform:translateY(-4px);}
+.sost-icon{font-size:18px;color:var(--pp-bright);margin-bottom:.8rem;display:block;}
+.sost-title{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--white);margin-bottom:.7rem;line-height:1.9;}
+.sost-desc{font-size:12px;color:rgba(233,213,255,.65);line-height:1.7;}
+.budget-cols{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+.budget-block{margin-bottom:1.8rem;}
+.budget-label{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--pp-bright);margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:1px solid rgba(168,85,247,.3);}
+.budget-row{display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:1px solid rgba(168,85,247,.08);font-size:14px;transition:background .2s,padding-left .2s;cursor:default;}
+.budget-row:hover{background:rgba(168,85,247,.05);padding-left:.5rem;}
+.brow-name{color:var(--pp-light);}
+.brow-val{color:var(--pp-bright);font-weight:700;font-size:13px;}
+.budget-sub-row{display:flex;justify-content:space-between;padding:.45rem 0;font-size:12px;border-bottom:1px solid rgba(168,85,247,.07);cursor:default;transition:background .2s,padding-left .2s;}
+.budget-sub-row:hover{background:rgba(168,85,247,.05);padding-left:.5rem;}
+.budget-sub-row .brow-name{font-size:12px;color:rgba(233,213,255,.6);}
+.budget-sub-row .brow-val{font-size:12px;}
+.budget-total{background:var(--pp-bright);padding:2.5rem;text-align:center;margin-top:1.5rem;position:relative;overflow:hidden;cursor:default;transition:transform .25s;}
+.budget-total:hover{transform:scale(1.02);}
+.budget-total::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,.04) 20px,rgba(255,255,255,.04) 40px);}
+.tot-label{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--pp-dark);margin-bottom:.7rem;position:relative;}
+.tot-num{font-family:'Press Start 2P',monospace;font-size:30px;color:var(--black);position:relative;}
+.budget-note{font-size:11px;color:rgba(233,213,255,.45);margin-top:1rem;line-height:1.7;}
+.team-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--pp-bright);}
+.team-card{background:var(--black);padding:2.5rem 1.8rem;text-align:center;position:relative;overflow:hidden;transition:background .3s;cursor:default;}
+.team-card::before{content:'';position:absolute;top:-100%;left:-100%;width:300%;height:300%;background:radial-gradient(circle,rgba(168,85,247,.1) 0%,transparent 60%);transition:top .5s,left .5s;}
+.team-card:hover::before{top:-50%;left:-50%;}
+.team-card:hover{background:#0f0f1a;}
+.t-avatar{width:76px;height:76px;margin:0 auto 1.3rem;background:var(--pp-dark);border:2px solid var(--pp-bright);display:flex;align-items:center;justify-content:center;font-family:'Press Start 2P',monospace;font-size:16px;color:var(--pp-bright);position:relative;transition:box-shadow .3s,border-color .3s;}
+.team-card:hover .t-avatar{box-shadow:0 0 20px rgba(168,85,247,.5);border-color:var(--pp-neon);}
+.t-avatar::before,.t-avatar::after{content:'';position:absolute;width:7px;height:7px;background:var(--pp-bright);transition:background .3s;}
+.team-card:hover .t-avatar::before,.team-card:hover .t-avatar::after{background:var(--pp-neon);}
+.t-avatar::before{top:-4px;left:-4px;}.t-avatar::after{bottom:-4px;right:-4px;}
+.t-name{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--white);margin-bottom:.5rem;line-height:1.9;}
+.t-role{font-size:12px;color:var(--pp-bright);font-weight:600;margin-bottom:.3rem;}
+.t-hours{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--pp-mid);margin-bottom:.9rem;}
+.t-bullets{list-style:none;text-align:left;}
+.t-bullets li{font-size:12px;color:#777;line-height:1.7;padding-left:.9rem;position:relative;}
+.t-bullets li::before{content:'▸';position:absolute;left:0;color:var(--pp-mid);font-size:10px;}
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.contact-big{font-family:'Press Start 2P',monospace;font-size:clamp(16px,2.2vw,24px);color:var(--pp-dark);line-height:1.6;margin-bottom:1.3rem;}
+.contact-big .hl{color:var(--pp-bright);animation:hlP 2s ease-in-out infinite alternate;}
+@keyframes hlP{from{opacity:.7;}to{opacity:1;}}
+.contact-sub{font-size:14px;color:#555;line-height:1.8;margin-bottom:1.8rem;}
+.c-items{display:flex;flex-direction:column;gap:.7rem;}
+.c-item{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.4rem;border:1px solid var(--pp-light);position:relative;overflow:hidden;transition:border-color .25s,background .25s;cursor:default;}
+.c-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--pp-bright);transform:scaleY(0);transition:transform .25s;}
+.c-item:hover::before{transform:scaleY(1);}
+.c-item:hover{border-color:var(--pp-bright);background:var(--pp-pale);}
+.c-icon{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--pp-bright);min-width:34px;}
+.c-label{font-size:8px;color:#aaa;font-family:'Press Start 2P',monospace;margin-bottom:2px;}
+.c-val{font-size:13px;font-weight:600;color:var(--black);}
+footer{background:var(--black);border-top:3px solid var(--pp-bright);padding:1.8rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.f-logo{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--white);}
+.f-logo span{color:var(--pp-bright);}
+.f-copy{font-size:11px;color:#444;}
+.f-social{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--pp-bright);}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);}
+.reveal-left.vis{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);}
+.reveal-right.vis{opacity:1;transform:translateX(0);}
+.d1{transition-delay:.05s;}.d2{transition-delay:.11s;}.d3{transition-delay:.17s;}.d4{transition-delay:.23s;}.d5{transition-delay:.29s;}.d6{transition-delay:.35s;}
+.schema-wrap{overflow-x:auto;margin-top:1.5rem;border:1px solid rgba(168,85,247,.3);border-radius:6px;}
+@media(max-width:900px){nav{padding:0 1.5rem;}.nav-links{display:none;}.hero{padding:6rem 1.5rem 4rem;}.sec{padding:4rem 1.5rem;}.two-col,.budget-cols,.contact-layout,.sost-grid,.team-wrap{grid-template-columns:1fr;}footer{flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">TYPE<span>&</span>FIX</a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proyecto">Proyecto</a></li>
+    <li><a href="#equipamiento">Equipamiento</a></li>
+    <li><a href="#bbdd">Base de Datos</a></li>
+    <li><a href="#planificacion">Planificacion</a></li>
+    <li><a href="#normativas">Normativas</a></li>
+    <li><a href="#presupuesto">Presupuesto</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="amb-grid"></div>
+  <div class="particles" id="particles"></div>
+  <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+  <div class="hero-tag">// VALENCIA, ES &mdash; TYPE&amp;FIX SL &mdash; EST. 2025</div>
+  <h1>TYPE<br><span class="amp">&amp;</span><br>FIX</h1>
+  <div class="hero-sub">YOU <span class="box">TYPE</span> , WE FIX</div>
+  <div class="cta-row">
+    <a href="#proyecto" class="btn btn-primary">Ver Proyecto Zamorano</a>
+    <a href="#contacto" class="btn btn-ghost">Contactanos</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-num" id="c1">96h</span><span class="hstat-label">Mano de obra</span></div>
+    <div class="hstat"><span class="hstat-num" id="c2">6</span><span class="hstat-label">Redes segmentadas</span></div>
+    <div class="hstat"><span class="hstat-num" id="c3">22</span><span class="hstat-label">Rosetas instaladas</span></div>
+    <div class="hstat"><span class="hstat-num">1 Gbps</span><span class="hstat-label">Fibra simetrica</span></div>
+    <div class="hstat"><span class="hstat-num">8.445 &euro;</span><span class="hstat-label">Presupuesto total</span></div>
+  </div>
+  <div class="scroll-hint"><span>scroll</span><div class="scroll-arrow"></div></div>
+</section>
+<div class="px-div"></div>
+
+<!-- SERVICIOS -->
+<section id="servicios" class="sec">
+  <div class="wrap">
+    <div class="reveal"><div class="sec-tag">Servicios</div><div class="sec-title">Lo que hacemos</div></div>
+    <div class="svc-grid">
+      <div class="svc reveal d1"><span class="svc-n">01</span><div class="svc-title">Cableado estructurado</div><ul class="svc-list"><li class="svc-li">Cat 6, 6A y 7 segun ISO/IEC 11801</li><li class="svc-li">Certificacion toma a toma</li><li class="svc-li">Etiquetado TIA-606 completo</li></ul></div>
+      <div class="svc reveal d2"><span class="svc-n">02</span><div class="svc-title">Redes WiFi corporativas</div><ul class="svc-list"><li class="svc-li">Ubiquiti UniFi con controlador central</li><li class="svc-li">Segmentacion por VLAN y departamento</li><li class="svc-li">WPA3 + WiFi invitados aislada</li></ul></div>
+      <div class="svc reveal d3"><span class="svc-n">03</span><div class="svc-title">Armarios de comunicaciones</div><ul class="svc-list"><li class="svc-li">Racks 19", patch panels y switches</li><li class="svc-li">Gestion de VLANs y QoS</li><li class="svc-li">SAI para proteccion ante cortes</li></ul></div>
+      <div class="svc reveal d4"><span class="svc-n">04</span><div class="svc-title">Servidores y NAS</div><ul class="svc-list"><li class="svc-li">Synology en RAID 5</li><li class="svc-li">Carpetas compartidas y backups</li><li class="svc-li">DNS interno y acceso en red</li></ul></div>
+      <div class="svc reveal d5"><span class="svc-n">05</span><div class="svc-title">VoIP y videoconferencia</div><ul class="svc-list"><li class="svc-li">Telefonos IP con prioridad QoS</li><li class="svc-li">Red de voz segregada</li><li class="svc-li">Camara, altavoces y TV integrados</li></ul></div>
+      <div class="svc reveal d6"><span class="svc-n">06</span><div class="svc-title">Seguridad de red</div><ul class="svc-list"><li class="svc-li">Firewall entre VLANs</li><li class="svc-li">VPN para acceso remoto</li><li class="svc-li">SAI con 20-30 min de autonomia</li></ul></div>
+    </div>
+  </div>
+</section>
+<div class="px-div"></div>
+
+<!-- PROYECTO -->
+<section id="proyecto" class="sec sec-dark">
+  <div class="amb-grid" style="opacity:.5;"></div>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-tag">Caso de exito</div>
+      <div class="sec-title">Proyecto Zamorano &amp; Asociados &mdash; Paiporta 2026</div>
+    </div>
+    <div class="two-col">
+      <div class="reveal-left">
+        <p style="color:var(--pp-light);font-size:15px;line-height:1.9;margin-bottom:1.2rem;"><strong style="color:var(--pp-bright);">Zamorano &amp; Asociados</strong> es una prestigiosa firma de arquitectura que nos ha contratado para instalar la infraestructura de telecomunicaciones en la nueva sede que estan disenando para uno de sus clientes: una empresa internacional de desarrollo de videojuegos que se establece en Paiporta.</p>
+        <p style="color:var(--pp-light);font-size:15px;line-height:1.9;margin-bottom:1.2rem;"><a href="Plano oficinas-1.pdf">La sede es un adosado de dos plantas diseado para fomentar la creatividad y el trabajo en equipo.</a> Nuestro trabajo es garantizar que la red soporte el desarrollo intensivo de software, las pruebas con dispositivos moviles y las videoconferencias con estudios de todo el mundo.</p>
+        <div class="info-card"><h4>Conexion &mdash; Movistar Empresas</h4><ul><li><strong>1 Gbps simetrico</strong> subida y bajada</li><li>Router incluido, instalado en el CPD</li><li><strong>59,90 &euro;/mes</strong> &middot; permanencia 12 meses</li></ul></div>
+        <div class="info-card"><h4>Cableado</h4><ul><li><strong>Cat 7</strong> backbone entre plantas</li><li><strong>Cat 6A</strong> para todos los puestos</li><li>Roseta doble en cada puesto (backup)</li></ul></div>
+        <div class="info-card"><h4>6 redes completamente independientes</h4><p>Desarrollo &middot; Administracion &middot; WiFi devs &middot; WiFi invitados &middot; Servidores &middot; VoIP</p></div>
+      </div>
+      
+      <div class="reveal-right">
+        <div class="stats-mini" style="margin-top:0;margin-bottom:1.5rem;">
+          <div class="sm-cell"><div class="sm-num">2</div><div class="sm-label">Plantas</div></div>
+          <div class="sm-cell"><div class="sm-num">7</div><div class="sm-label">Zonas conectadas</div></div>
+          <div class="sm-cell"><div class="sm-num">10</div><div class="sm-label">Puestos desarrollo</div></div>
+          <div class="sm-cell"><div class="sm-num">12 TB</div><div class="sm-label">NAS RAID 5</div></div>
+        </div>
+        <div class="info-card"><h4>CPD &mdash; Zona Archivo PB</h4><ul><li>Switch core + patch panel gestionable</li><li>NAS Synology DS923+ (4 bahias)</li><li>SAI APC 950VA para proteccion</li></ul></div>
+        <div class="info-card"><h4>Garaje &mdash; 10 puestos desarrollo (43,86 m&sup2;)</h4><ul><li>Roseta doble Cat 6A por puesto</li><li>WiFi exclusiva en subred aislada</li><li>Switch PoE dedicado</li></ul></div>
+        <div class="info-card"><h4>Primera Planta &mdash; Gerencia y Diseno</h4><ul><li>Oficina 1: 5 puestos diseno grafico</li><li>Oficina 2: gerencia + vicedirecci&oacute;n</li><li>Sala reuniones: VoIP, WiFi invitados, TV 65&quot;</li></ul></div>
+        
+      </div>
+      <div class="info-card">
+  <h4>Segmentación de red — 6 VLANs</h4>
+  <div style="overflow-x:auto; margin-top:1rem;">
+    <table style="width:100%; border-collapse:collapse; font-size:12px; color:var(--pp-light); text-align:left;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--pp-bright); font-family:'Press Start 2P', monospace; font-size:7px; color:var(--pp-bright);">
+          <th style="padding:5px;">ID</th>
+          <th style="padding:5px;">USO</th>
+          <th style="padding:5px;">IP RANGE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(168,85,247,0.15);">
+          <td style="padding:8px 5px; color:var(--pp-neon); font-family:'Press Start 2P', monospace; font-size:7px;">10</td>
+          <td style="padding:8px 5px;">Desarrollo (Cable)</td>
+          <td style="padding:8px 5px; font-family:monospace; color:var(--pp-neon);">.10.0/26</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(168,85,247,0.15);">
+          <td style="padding:8px 5px; color:var(--pp-neon); font-family:'Press Start 2P', monospace; font-size:7px;">20</td>
+          <td style="padding:8px 5px;">Admin / Diseño</td>
+          <td style="padding:8px 5px; font-family:monospace; color:var(--pp-neon);">.10.64/27</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(168,85,247,0.15);">
+          <td style="padding:8px 5px; color:var(--pp-neon); font-family:'Press Start 2P', monospace; font-size:7px;">30</td>
+          <td style="padding:8px 5px;">WiFi Devs</td>
+          <td style="padding:8px 5px; font-family:monospace; color:var(--pp-neon);">.10.96/27</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(168,85,247,0.15);">
+          <td style="padding:8px 5px; color:var(--pp-neon); font-family:'Press Start 2P', monospace; font-size:7px;">40</td>
+          <td style="padding:8px 5px;">WiFi Invitados</td>
+          <td style="padding:8px 5px; font-family:monospace; color:var(--pp-neon);">.10.128/27</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(168,85,247,0.15);">
+          <td style="padding:8px 5px; color:var(--pp-neon); font-family:'Press Start 2P', monospace; font-size:7px;">50</td>
+          <td style="padding:8px 5px;">Servidores / NAS</td>
+          <td style="padding:8px 5px; font-family:monospace; color:var(--pp-neon);">.10.160/28</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 5px; color:var(--pp-neon); font-family:'Press Start 2P', monospace; font-size:7px;">60</td>
+          <td style="padding:8px 5px;">VoIP / Video</td>
+          <td style="padding:8px 5px; font-family:monospace; color:var(--pp-neon);">.10.176/28</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+    </div>
+  </div>
+</section>
+<div class="px-div"></div>
+
+<!-- EQUIPAMIENTO -->
+<section id="equipamiento" class="sec sec-black">
+  <div class="amb-grid" style="opacity:.4;"></div>
+  <div class="wrap">
+    <div class="reveal"><div class="sec-tag">Infraestructura</div><div class="sec-title">Equipamiento por zonas</div></div>
+    <div class="equip-grid">
+      <div class="equip-zone reveal d1">
+        <div class="equip-zone-title">// CPD &mdash; Planta Baja</div>
+        <div class="equip-item"><div><div class="equip-name">Switch core gestionable</div><div class="equip-model">TP-Link TL-SG3428</div></div><div class="equip-qty">&times;1</div></div>
+        <div class="equip-item"><div><div class="equip-name">Patch panel 24p Cat 6A</div></div><div class="equip-qty">&times;1</div></div>
+        <div class="equip-item"><div><div class="equip-name">SAI / UPS</div><div class="equip-model">APC Back-UPS 950VA</div></div><div class="equip-qty">&times;1</div></div>
+        <div class="equip-item"><div><div class="equip-name">NAS 4 bahias</div><div class="equip-model">Synology DS923+</div></div><div class="equip-qty">&times;1</div></div>
+        <div class="equip-item"><div><div class="equip-name">HDD NAS</div><div class="equip-model">Seagate IronWolf 4 TB</div></div><div class="equip-qty">&times;4</div></div>
+        <div class="equip-item"><div><div class="equip-name">Rack 19&quot; 12U sobremesa</div></div><div class="equip-qty">&times;1</div></div>
+      </div>
+      <div class="equip-zone reveal d2">
+        <div class="equip-zone-title">// Garaje &mdash; Zona Desarrollo</div>
+        <div class="equip-item"><div><div class="equip-name">Rosetas dobles Cat 6A</div><div class="equip-model">Simon 500 Cima &mdash; 2 tomas/puesto</div></div><div class="equip-qty">&times;10</div></div>
+        <div class="equip-item"><div><div class="equip-name">Switch PoE</div><div class="equip-model">TP-Link TL-SG2218P</div></div><div class="equip-qty">&times;1</div></div>
+        <div class="equip-item"><div><div class="equip-name">AP WiFi desarrolladores</div><div class="equip-model">Ubiquiti UniFi U6-Lite</div></div><div class="equip-qty">&times;1</div></div>
+      </div>
+      <div class="equip-zone reveal d3">
+        <div class="equip-zone-title">// Oficinas &mdash; Primera Planta</div>
+        <div class="equip-item"><div><div class="equip-name">Rosetas dobles Cat 6A</div><div class="equip-model">Oficina 1 &mdash; 5 puestos diseno</div></div><div class="equip-qty">&times;5</div></div>
+        <div class="equip-item"><div><div class="equip-name">Rosetas dobles Cat 6A</div><div class="equip-model">Oficina 2 &mdash; gerencia + viceDir</div></div><div class="equip-qty">&times;2</div></div>
+      </div>
+      <div class="equip-zone reveal d4">
+        <div class="equip-zone-title">// Sala Reuniones &mdash; P1</div>
+        <div class="equip-item"><div><div class="equip-name">Rosetas dobles Cat 6A</div><div class="equip-model">PC 3D &middot; Impresora 3D &middot; Fotocopiadora</div></div><div class="equip-qty">&times;3</div></div>
+        <div class="equip-item"><div><div class="equip-name">AP WiFi invitados</div><div class="equip-model">Ubiquiti UniFi U6-Lite</div></div><div class="equip-qty">&times;1</div></div>
+        <div class="equip-item"><div><div class="equip-name">Telefonos IP</div><div class="equip-model">Grandstream GXP2160</div></div><div class="equip-qty">&times;2</div></div>
+        <div class="equip-item"><div><div class="equip-name">Television sala</div><div class="equip-model">65&quot; 4K HDMI</div></div><div class="equip-qty">&times;1</div></div>
+      </div>
+      <div class="equip-zone reveal d5">
+        <div class="equip-zone-title">// Distribucion &mdash; P1</div>
+        <div class="equip-item"><div><div class="equip-name">Switch PoE</div><div class="equip-model">TP-Link TL-SG2218P</div></div><div class="equip-qty">&times;1</div></div>
+        <div class="equip-item"><div><div class="equip-name">Patch panel 24p Cat 6A</div></div><div class="equip-qty">&times;1</div></div>
+        <div class="equip-item"><div><div class="equip-name">Armario rack pared 6U</div></div><div class="equip-qty">&times;1</div></div>
+      </div>
+      <div class="equip-zone reveal d6">
+        <div class="equip-zone-title">// Cableado total</div>
+        <div class="equip-item"><div><div class="equip-name">Cable Cat 7 S/FTP</div><div class="equip-model">Backbone entre plantas</div></div><div class="equip-qty">25 m</div></div>
+        <div class="equip-item"><div><div class="equip-name">Cable Cat 6A U/FTP</div><div class="equip-model">Horizontal puestos de trabajo</div></div><div class="equip-qty">280 m</div></div>
+        <div class="equip-item"><div><div class="equip-name">Canaletas PVC</div><div class="equip-model">40&times;25 y 60&times;40 mm</div></div><div class="equip-qty">80 m</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="px-div"></div>
+
+<!-- BASE DE DATOS -->
+<section id="bbdd" class="sec sec-dark">
+  <div class="amb-grid" style="opacity:.4;"></div>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-tag">Base de datos</div>
+      <div class="sec-title">Servidor de la empresa de videojuegos</div>
+    </div>
+    <div class="two-col reveal">
+      <div>
+        <p style="color:var(--pp-light);font-size:14px;line-height:1.9;margin-bottom:1.2rem;">Como parte del proyecto, instalamos y configuramos el servidor NAS en el CPD de la empresa de videojuegos. En el se despliega una base de datos MySQL para gestionar toda la informacion interna de la empresa.</p>
+        <div class="info-card"><h4>Que gestiona</h4><ul>
+          <li>Proyectos de videojuegos: titulo, genero, plataforma, fechas, presupuesto</li>
+          <li>Clientes de la empresa: datos de contacto e historial</li>
+          <li>Trabajadores: cargo, departamento, salario</li>
+          <li>Agenda: citas, reuniones y tareas por trabajador</li>
+          <li>Partes de trabajo: horas por proyecto y empleado</li>
+          <li>Facturacion y contabilidad: ingresos, gastos, IVA</li>
+        </ul></div>
+        <div class="info-card"><h4>Tecnologia</h4><ul>
+          <li><strong>MySQL 8+</strong> con charset utf8mb4</li>
+          <li>8 tablas relacionadas con integridad referencial</li>
+          <li>Subtotales de lineas de factura calculados automaticamente</li>
+          <li>Estados con ENUM para consistencia de datos</li>
+        </ul></div>
+      </div>
+      <div>
+        <div class="info-card"><h4>Relaciones clave</h4><ul>
+          <li>Un cliente puede tener N proyectos y N facturas</li>
+          <li>Un proyecto tiene N partes de trabajo y puede tener N facturas</li>
+          <li>Un trabajador tiene su propia agenda y sus partes de trabajo</li>
+          <li>Contabilidad vinculada a facturas y proyectos (FK opcionales)</li>
+        </ul></div>
+        <div class="info-card"><h4>Acceso en red</h4><ul>
+          <li>NAS accesible desde cualquier equipo de la empresa</li>
+          <li>Backups automaticos nocturnos en RAID 5</li>
+          <li>Acceso restringido por VLAN de servidores</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <!-- SVG SCHEMA -->
+    <div class="reveal" style="margin-top:2.5rem;">
+      <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--pp-bright);margin-bottom:1rem;">// DIAGRAMA ENTIDAD-RELACION</div>
+      <div class="schema-wrap">
+<svg viewBox="0 0 575 615" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d001f;border-radius:6px;">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4ade80"/>
+    </marker>
+  </defs>
+
+  <!-- ═══ CONNECTIONS (behind tables) ═══ -->
+  <!-- 1: CLIENTES → PROYECTOS -->
+  <path d="M 170,74 L 182,74 L 182,101 L 190,101" fill="none" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="152" y="71" fill="#4ade80" font-family="monospace" font-size="9">1</text>
+  <text x="183" y="117" fill="#4ade80" font-family="monospace" font-size="9">N</text>
+
+  <!-- 2: CLIENTES → FACTURAS -->
+  <line x1="80" y1="163" x2="80" y2="252" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="83" y="178" fill="#4ade80" font-family="monospace" font-size="9">1</text>
+  <text x="83" y="247" fill="#4ade80" font-family="monospace" font-size="9">N</text>
+
+  <!-- 3: PROYECTOS → PARTES_TRABAJO -->
+  <line x1="268" y1="217" x2="268" y2="252" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="271" y="229" fill="#4ade80" font-family="monospace" font-size="9">1</text>
+  <text x="271" y="247" fill="#4ade80" font-family="monospace" font-size="9">N</text>
+
+  <!-- 4: PROYECTOS → FACTURAS (opt, dashed) -->
+  <path d="M 212,217 L 212,236 L 143,236 L 143,252" fill="none" stroke="#4ade80" stroke-width="1.3" stroke-dasharray="4,2" marker-end="url(#arr)"/>
+
+  <!-- 5: TRABAJADORES → PARTES_TRABAJO (route left) -->
+  <path d="M 430,170 L 415,170 L 415,230 L 345,230 L 345,252" fill="none" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="417" y="167" fill="#4ade80" font-family="monospace" font-size="9">1</text>
+  <text x="330" y="248" fill="#4ade80" font-family="monospace" font-size="9">N</text>
+
+  <!-- 6: TRABAJADORES → AGENDA -->
+  <line x1="462" y1="181" x2="462" y2="252" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="465" y="195" fill="#4ade80" font-family="monospace" font-size="9">1</text>
+  <text x="465" y="248" fill="#4ade80" font-family="monospace" font-size="9">N</text>
+
+  <!-- 7: FACTURAS → LINEAS_FACTURA -->
+  <line x1="80" y1="400" x2="80" y2="435" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="83" y="413" fill="#4ade80" font-family="monospace" font-size="9">1</text>
+  <text x="83" y="431" fill="#4ade80" font-family="monospace" font-size="9">N</text>
+
+  <!-- ═══ TABLE: CLIENTES (15,15,155,148) 7 fields ═══ -->
+  <rect x="15" y="15" width="155" height="148" fill="#140028" stroke="#7e22ce" stroke-width="1.5" rx="3"/>
+  <rect x="15" y="15" width="155" height="22" fill="#6d28d9" rx="3 3 0 0"/>
+  <text x="92" y="30" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">CLIENTES</text>
+  <rect x="16" y="37" width="153" height="18" fill="rgba(250,204,21,0.13)"/>
+  <text x="22" y="50" fill="#facc15" font-family="monospace" font-size="8.5">PK  id_cliente</text>
+  <text x="22" y="68" fill="#d8b4fe" font-family="monospace" font-size="8.5">    nombre</text>
+  <text x="22" y="86" fill="#d8b4fe" font-family="monospace" font-size="8.5">    empresa</text>
+  <text x="22" y="104" fill="#d8b4fe" font-family="monospace" font-size="8.5">    email</text>
+  <text x="22" y="122" fill="#d8b4fe" font-family="monospace" font-size="8.5">    telefono</text>
+  <text x="22" y="140" fill="#d8b4fe" font-family="monospace" font-size="8.5">    ciudad</text>
+  <text x="22" y="158" fill="#d8b4fe" font-family="monospace" font-size="8.5">    fecha_registro</text>
+  <line x1="16" y1="55" x2="169" y2="55" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="73" x2="169" y2="73" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="91" x2="169" y2="91" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="109" x2="169" y2="109" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="127" x2="169" y2="127" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="145" x2="169" y2="145" stroke="#3b0764" stroke-width="0.5"/>
+
+  <!-- ═══ TABLE: PROYECTOS (190,15,170,202) 10 fields ═══ -->
+  <rect x="190" y="15" width="170" height="202" fill="#140028" stroke="#7e22ce" stroke-width="1.5" rx="3"/>
+  <rect x="190" y="15" width="170" height="22" fill="#6d28d9" rx="3 3 0 0"/>
+  <text x="275" y="30" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">PROYECTOS</text>
+  <rect x="191" y="37" width="168" height="18" fill="rgba(250,204,21,0.13)"/>
+  <text x="197" y="50" fill="#facc15" font-family="monospace" font-size="8.5">PK  id_proyecto</text>
+  <rect x="191" y="55" width="168" height="18" fill="rgba(192,132,252,0.1)"/>
+  <text x="197" y="68" fill="#c084fc" font-family="monospace" font-size="8.5">FK  id_cliente</text>
+  <text x="197" y="86" fill="#d8b4fe" font-family="monospace" font-size="8.5">    titulo</text>
+  <text x="197" y="104" fill="#d8b4fe" font-family="monospace" font-size="8.5">    descripcion</text>
+  <text x="197" y="122" fill="#d8b4fe" font-family="monospace" font-size="8.5">    genero</text>
+  <text x="197" y="140" fill="#d8b4fe" font-family="monospace" font-size="8.5">    plataforma</text>
+  <text x="197" y="158" fill="#d8b4fe" font-family="monospace" font-size="8.5">    estado</text>
+  <text x="197" y="176" fill="#d8b4fe" font-family="monospace" font-size="8.5">    fecha_inicio</text>
+  <text x="197" y="194" fill="#d8b4fe" font-family="monospace" font-size="8.5">    fecha_fin</text>
+  <text x="197" y="212" fill="#d8b4fe" font-family="monospace" font-size="8.5">    presupuesto</text>
+  <line x1="191" y1="55" x2="359" y2="55" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="73" x2="359" y2="73" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="91" x2="359" y2="91" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="109" x2="359" y2="109" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="127" x2="359" y2="127" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="145" x2="359" y2="145" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="163" x2="359" y2="163" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="181" x2="359" y2="181" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="199" x2="359" y2="199" stroke="#3b0764" stroke-width="0.5"/>
+
+  <!-- ═══ TABLE: TRABAJADORES (385,15,155,166) 8 fields ═══ -->
+  <rect x="385" y="15" width="155" height="166" fill="#140028" stroke="#7e22ce" stroke-width="1.5" rx="3"/>
+  <rect x="385" y="15" width="155" height="22" fill="#6d28d9" rx="3 3 0 0"/>
+  <text x="462" y="30" text-anchor="middle" fill="#fff" font-family="monospace" font-size="9" font-weight="bold">TRABAJADORES</text>
+  <rect x="386" y="37" width="153" height="18" fill="rgba(250,204,21,0.13)"/>
+  <text x="392" y="50" fill="#facc15" font-family="monospace" font-size="8.5">PK  id_trabajador</text>
+  <text x="392" y="68" fill="#d8b4fe" font-family="monospace" font-size="8.5">    nombre</text>
+  <text x="392" y="86" fill="#d8b4fe" font-family="monospace" font-size="8.5">    apellidos</text>
+  <text x="392" y="104" fill="#d8b4fe" font-family="monospace" font-size="8.5">    cargo</text>
+  <text x="392" y="122" fill="#d8b4fe" font-family="monospace" font-size="8.5">    departamento</text>
+  <text x="392" y="140" fill="#d8b4fe" font-family="monospace" font-size="8.5">    email</text>
+  <text x="392" y="158" fill="#d8b4fe" font-family="monospace" font-size="8.5">    salario</text>
+  <text x="392" y="176" fill="#d8b4fe" font-family="monospace" font-size="8.5">    activo</text>
+  <line x1="386" y1="55" x2="539" y2="55" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="386" y1="73" x2="539" y2="73" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="386" y1="91" x2="539" y2="91" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="386" y1="109" x2="539" y2="109" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="386" y1="127" x2="539" y2="127" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="386" y1="145" x2="539" y2="145" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="386" y1="163" x2="539" y2="163" stroke="#3b0764" stroke-width="0.5"/>
+
+  <!-- ═══ TABLE: FACTURAS (15,252,155,148) 7 fields ═══ -->
+  <rect x="15" y="252" width="155" height="148" fill="#140028" stroke="#7e22ce" stroke-width="1.5" rx="3"/>
+  <rect x="15" y="252" width="155" height="22" fill="#6d28d9" rx="3 3 0 0"/>
+  <text x="92" y="267" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">FACTURAS</text>
+  <rect x="16" y="274" width="153" height="18" fill="rgba(250,204,21,0.13)"/>
+  <text x="22" y="287" fill="#facc15" font-family="monospace" font-size="8.5">PK  id_factura</text>
+  <rect x="16" y="292" width="153" height="18" fill="rgba(192,132,252,0.1)"/>
+  <text x="22" y="305" fill="#c084fc" font-family="monospace" font-size="8.5">FK  id_cliente</text>
+  <rect x="16" y="310" width="153" height="18" fill="rgba(192,132,252,0.07)"/>
+  <text x="22" y="323" fill="#9ca3af" font-family="monospace" font-size="8.5">FK? id_proyecto</text>
+  <text x="22" y="341" fill="#d8b4fe" font-family="monospace" font-size="8.5">    numero</text>
+  <text x="22" y="359" fill="#d8b4fe" font-family="monospace" font-size="8.5">    fecha_emision</text>
+  <text x="22" y="377" fill="#d8b4fe" font-family="monospace" font-size="8.5">    total / iva</text>
+  <text x="22" y="395" fill="#d8b4fe" font-family="monospace" font-size="8.5">    estado</text>
+  <line x1="16" y1="292" x2="169" y2="292" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="310" x2="169" y2="310" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="328" x2="169" y2="328" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="346" x2="169" y2="346" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="364" x2="169" y2="364" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="382" x2="169" y2="382" stroke="#3b0764" stroke-width="0.5"/>
+
+  <!-- ═══ TABLE: PARTES_TRABAJO (190,252,155,148) 7 fields ═══ -->
+  <rect x="190" y="252" width="155" height="148" fill="#140028" stroke="#7e22ce" stroke-width="1.5" rx="3"/>
+  <rect x="190" y="252" width="155" height="22" fill="#6d28d9" rx="3 3 0 0"/>
+  <text x="267" y="267" text-anchor="middle" fill="#fff" font-family="monospace" font-size="8.5" font-weight="bold">PARTES_TRABAJO</text>
+  <rect x="191" y="274" width="153" height="18" fill="rgba(250,204,21,0.13)"/>
+  <text x="197" y="287" fill="#facc15" font-family="monospace" font-size="8.5">PK  id_parte</text>
+  <rect x="191" y="292" width="153" height="18" fill="rgba(192,132,252,0.1)"/>
+  <text x="197" y="305" fill="#c084fc" font-family="monospace" font-size="8.5">FK  id_trabajador</text>
+  <rect x="191" y="310" width="153" height="18" fill="rgba(192,132,252,0.1)"/>
+  <text x="197" y="323" fill="#c084fc" font-family="monospace" font-size="8.5">FK  id_proyecto</text>
+  <text x="197" y="341" fill="#d8b4fe" font-family="monospace" font-size="8.5">    fecha</text>
+  <text x="197" y="359" fill="#d8b4fe" font-family="monospace" font-size="8.5">    horas_trabajadas</text>
+  <text x="197" y="377" fill="#d8b4fe" font-family="monospace" font-size="8.5">    descripcion</text>
+  <text x="197" y="395" fill="#d8b4fe" font-family="monospace" font-size="8.5">    validado</text>
+  <line x1="191" y1="292" x2="344" y2="292" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="310" x2="344" y2="310" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="328" x2="344" y2="328" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="346" x2="344" y2="346" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="364" x2="344" y2="364" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="382" x2="344" y2="382" stroke="#3b0764" stroke-width="0.5"/>
+
+  <!-- ═══ TABLE: AGENDA (385,252,155,148) 7 fields ═══ -->
+  <rect x="385" y="252" width="155" height="148" fill="#140028" stroke="#7e22ce" stroke-width="1.5" rx="3"/>
+  <rect x="385" y="252" width="155" height="22" fill="#6d28d9" rx="3 3 0 0"/>
+  <text x="462" y="267" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">AGENDA</text>
+  <rect x="386" y="274" width="153" height="18" fill="rgba(250,204,21,0.13)"/>
+  <text x="392" y="287" fill="#facc15" font-family="monospace" font-size="8.5">PK  id_evento</text>
+  <rect x="386" y="292" width="153" height="18" fill="rgba(192,132,252,0.1)"/>
+  <text x="392" y="305" fill="#c084fc" font-family="monospace" font-size="8.5">FK  id_trabajador</text>
+  <rect x="386" y="310" width="153" height="18" fill="rgba(192,132,252,0.07)"/>
+  <text x="392" y="323" fill="#9ca3af" font-family="monospace" font-size="8.5">FK? id_proyecto</text>
+  <text x="392" y="341" fill="#d8b4fe" font-family="monospace" font-size="8.5">    tipo</text>
+  <text x="392" y="359" fill="#d8b4fe" font-family="monospace" font-size="8.5">    titulo</text>
+  <text x="392" y="377" fill="#d8b4fe" font-family="monospace" font-size="8.5">    fecha_inicio</text>
+  <text x="392" y="395" fill="#d8b4fe" font-family="monospace" font-size="8.5">    completado</text>
+  <line x1="386" y1="292" x2="539" y2="292" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="386" y1="310" x2="539" y2="310" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="386" y1="328" x2="539" y2="328" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="386" y1="346" x2="539" y2="346" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="386" y1="364" x2="539" y2="364" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="386" y1="382" x2="539" y2="382" stroke="#3b0764" stroke-width="0.5"/>
+
+  <!-- ═══ TABLE: LINEAS_FACTURA (15,435,155,130) 6 fields ═══ -->
+  <rect x="15" y="435" width="155" height="130" fill="#140028" stroke="#7e22ce" stroke-width="1.5" rx="3"/>
+  <rect x="15" y="435" width="155" height="22" fill="#6d28d9" rx="3 3 0 0"/>
+  <text x="92" y="450" text-anchor="middle" fill="#fff" font-family="monospace" font-size="8.5" font-weight="bold">LINEAS_FACTURA</text>
+  <rect x="16" y="457" width="153" height="18" fill="rgba(250,204,21,0.13)"/>
+  <text x="22" y="470" fill="#facc15" font-family="monospace" font-size="8.5">PK  id_linea</text>
+  <rect x="16" y="475" width="153" height="18" fill="rgba(192,132,252,0.1)"/>
+  <text x="22" y="488" fill="#c084fc" font-family="monospace" font-size="8.5">FK  id_factura</text>
+  <text x="22" y="506" fill="#d8b4fe" font-family="monospace" font-size="8.5">    descripcion</text>
+  <text x="22" y="524" fill="#d8b4fe" font-family="monospace" font-size="8.5">    cantidad</text>
+  <text x="22" y="542" fill="#d8b4fe" font-family="monospace" font-size="8.5">    precio_unit</text>
+  <text x="22" y="560" fill="#9ca3af" font-family="monospace" font-size="8.5">    subtotal *calc</text>
+  <line x1="16" y1="475" x2="169" y2="475" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="493" x2="169" y2="493" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="511" x2="169" y2="511" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="529" x2="169" y2="529" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="16" y1="547" x2="169" y2="547" stroke="#3b0764" stroke-width="0.5"/>
+
+  <!-- ═══ TABLE: CONTABILIDAD (190,435,155,148) 7 fields ═══ -->
+  <rect x="190" y="435" width="170" height="148" fill="#140028" stroke="#7e22ce" stroke-width="1.5" rx="3"/>
+  <rect x="190" y="435" width="170" height="22" fill="#6d28d9" rx="3 3 0 0"/>
+  <text x="275" y="450" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">CONTABILIDAD</text>
+  <rect x="191" y="457" width="168" height="18" fill="rgba(250,204,21,0.13)"/>
+  <text x="197" y="470" fill="#facc15" font-family="monospace" font-size="8.5">PK  id_mov</text>
+  <text x="197" y="488" fill="#d8b4fe" font-family="monospace" font-size="8.5">    tipo (ingreso/gasto)</text>
+  <text x="197" y="506" fill="#d8b4fe" font-family="monospace" font-size="8.5">    concepto</text>
+  <text x="197" y="524" fill="#d8b4fe" font-family="monospace" font-size="8.5">    importe / fecha</text>
+  <rect x="191" y="529" width="168" height="18" fill="rgba(192,132,252,0.07)"/>
+  <text x="197" y="542" fill="#9ca3af" font-family="monospace" font-size="8.5">FK? id_factura</text>
+  <rect x="191" y="547" width="168" height="18" fill="rgba(192,132,252,0.07)"/>
+  <text x="197" y="560" fill="#9ca3af" font-family="monospace" font-size="8.5">FK? id_proyecto</text>
+  <text x="197" y="578" fill="#d8b4fe" font-family="monospace" font-size="8.5">    categoria</text>
+  <line x1="191" y1="475" x2="359" y2="475" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="493" x2="359" y2="493" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="511" x2="359" y2="511" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="529" x2="359" y2="529" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="547" x2="359" y2="547" stroke="#3b0764" stroke-width="0.5"/>
+  <line x1="191" y1="565" x2="359" y2="565" stroke="#3b0764" stroke-width="0.5"/>
+
+  <!-- ═══ LEGEND ═══ -->
+  <rect x="385" y="435" width="175" height="130" fill="#1a0035" stroke="#7e22ce" stroke-width="1" rx="4"/>
+  <text x="395" y="453" fill="#a855f7" font-family="monospace" font-size="9" font-weight="bold">LEYENDA</text>
+  <rect x="395" y="462" width="11" height="11" fill="rgba(250,204,21,0.2)" stroke="#facc15" stroke-width="1"/>
+  <text x="411" y="472" fill="#facc15" font-family="monospace" font-size="8">PK — Clave primaria</text>
+  <rect x="395" y="479" width="11" height="11" fill="rgba(192,132,252,0.2)" stroke="#c084fc" stroke-width="1"/>
+  <text x="411" y="489" fill="#c084fc" font-family="monospace" font-size="8">FK — Clave foranea</text>
+  <rect x="395" y="496" width="11" height="11" fill="rgba(156,163,175,0.15)" stroke="#9ca3af" stroke-width="1"/>
+  <text x="411" y="506" fill="#9ca3af" font-family="monospace" font-size="8">FK? — FK opcional</text>
+  <line x1="395" y1="520" x2="422" y2="520" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="426" y="524" fill="#4ade80" font-family="monospace" font-size="8">Relacion 1:N</text>
+  <line x1="395" y1="537" x2="422" y2="537" stroke="#4ade80" stroke-width="1.3" stroke-dasharray="3,2" marker-end="url(#arr)"/>
+  <text x="426" y="541" fill="#4ade80" font-family="monospace" font-size="8">FK opcional 1:N</text>
+  <text x="395" y="558" fill="#9ca3af" font-family="monospace" font-size="7">* campo calculado auto</text>
+</svg>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="px-div"></div>
+
+<!-- PLANIFICACION -->
+<section id="planificacion" class="sec sec-pale">
+  <div class="wrap">
+    <div class="reveal"><div class="sec-tag">Planificacion</div><div class="sec-title">Fases y cronograma</div></div>
+    <div class="two-col">
+      <div class="reveal-left">
+        <div class="phases">
+          <div class="phase"><div class="phase-num"><span class="ph-n">01</span><span>Replanteo</span><span class="ph-days">2 dias &middot; 16h</span></div><div class="phase-body"><div class="phase-title">Preparacion</div><div class="phase-tags"><span class="ptag">Visita edificio</span><span class="ptag">Marcaje recorridos</span><span class="ptag">Pedido materiales</span></div><div class="phase-who">// Selva + Hselva + Hector</div></div></div>
+          <div class="phase"><div class="phase-num"><span class="ph-n">02</span><span>Cableado</span><span class="ph-days">3 dias &middot; 24h</span></div><div class="phase-body"><div class="phase-title">Canaletas y cable</div><div class="phase-tags"><span class="ptag">Canaletas PB + P1</span><span class="ptag">280m Cat 6A</span><span class="ptag">25m Cat 7</span></div><div class="phase-who">// Hselva 217 + Hector</div></div></div>
+          <div class="phase"><div class="phase-num"><span class="ph-n">03</span><span>Rosetas</span><span class="ph-days">2 dias &middot; 16h</span></div><div class="phase-body"><div class="phase-title">Rosetas y armarios</div><div class="phase-tags"><span class="ptag">22 rosetas</span><span class="ptag">Racks montados</span><span class="ptag">Etiquetado TIA-606</span></div><div class="phase-who">// Hselva 217 + Hector</div></div></div>
+          <div class="phase"><div class="phase-num"><span class="ph-n">04</span><span>Equipos</span><span class="ph-days">3 dias &middot; 24h</span></div><div class="phase-body"><div class="phase-title">Equipos y config.</div><div class="phase-tags"><span class="ptag">Instalacion fisica</span><span class="ptag">VLANs + QoS</span><span class="ptag">NAS + VoIP</span></div><div class="phase-who">// Selva Twitch (core)</div></div></div>
+          <div class="phase"><div class="phase-num"><span class="ph-n">05</span><span>Entrega</span><span class="ph-days">2 dias &middot; 16h</span></div><div class="phase-body"><div class="phase-title">Pruebas y entrega</div><div class="phase-tags"><span class="ptag">Test por puesto</span><span class="ptag">Certificacion</span><span class="ptag">Documentacion</span></div><div class="phase-who">// Todo el equipo</div></div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--pp-mid);margin-top:1.5rem;" class="reveal">
+          <div style="background:var(--pp-pale);padding:1.3rem;text-align:center;"><div style="font-family:'Press Start 2P',monospace;font-size:16px;color:var(--pp-mid);">38h</div><div style="font-size:10px;color:var(--pp-mid);margin-top:.3rem;">Selva Twitch</div><div style="font-size:9px;color:var(--pp-bright);">35 &euro;/h</div></div>
+          <div style="background:var(--pp-pale);padding:1.3rem;text-align:center;"><div style="font-family:'Press Start 2P',monospace;font-size:16px;color:var(--pp-mid);">33h</div><div style="font-size:10px;color:var(--pp-mid);margin-top:.3rem;">Hselva 217</div><div style="font-size:9px;color:var(--pp-bright);">28 &euro;/h</div></div>
+          <div style="background:var(--pp-pale);padding:1.3rem;text-align:center;"><div style="font-family:'Press Start 2P',monospace;font-size:16px;color:var(--pp-mid);">25h</div><div style="font-size:10px;color:var(--pp-mid);margin-top:.3rem;">Hector Selva</div><div style="font-size:9px;color:var(--pp-bright);">25 &euro;/h</div></div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--pp-mid);margin-bottom:1rem;">// MAYO 2026</div>
+        <div class="crono-wrap" style="background:rgba(168,85,247,.05);border-color:rgba(168,85,247,.3);color:var(--pp-dark);">
+<span class="crono-week" style="color:var(--pp-mid);">── SEMANA 1  (05/05 – 09/05) ──</span><br>
+Lun 05  Fase 1 · Visita y replanteo<br>
+Mar 06  Fase 1 · Pedido materiales  <span style="color:var(--pp-bright);"><br>
+  ◆ HITO 1</span><br>
+Mie 07  Fase 2 · Canaletas PB<br>
+Jue 08  Fase 2 · Canaletas P1<br>
+Vie 09  Fase 2 · Backbone + remates<br>
+
+<span style="color:var(--pp-bright);">◆ HITO 2</span><br>
+
+<span class="crono-week" style="color:var(--pp-mid);">── SEMANA 2  (12/05 – 16/05) ──</span>
+<br>
+Lun 12  Fase 3 · Rosetas + armarios <br>
+Mar 13  Fase 3 · Patch panels + etiquetado<br>
+<span style="color:var(--pp-bright);">◆ HITO 3</span><br>
+Mie 14  Fase 4 · Instalacion fisica<br>
+Jue 15  Fase 4 · Configuracion redes<br>
+Vie 16  Fase 4 · NAS + VoIP  <br>
+<span style="color:var(--pp-bright);">◆ HITO 4</span><br>
+
+<span class="crono-week" style="color:var(--pp-mid);">── SEMANA 3  (19/05 – 20/05) ──</span><br>
+Lun 19  Fase 5 · Pruebas y certificacion<br>
+Mar 20  Fase 5 · Entrega oficial  <span style="color:var(--pp-bright);"><br> ◆ HITO 5 </span><br>
+        </div>
+        <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.7rem;">
+          <div class="info-card" style="background:rgba(168,85,247,.06);margin-bottom:0;"><h4 style="color:var(--pp-mid);">12 dias laborables</h4><p style="color:var(--pp-dark);">Del 5 al 20 de mayo de 2026 &middot; 96 horas totales</p></div>
+          <div class="info-card" style="background:rgba(168,85,247,.06);margin-bottom:0;"><h4 style="color:var(--pp-mid);">Garantia post-instalacion</h4><p style="color:var(--pp-dark);">Revision gratuita a los 30 dias. Soporte remoto incluido.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="px-div"></div>
+
+<!-- NORMATIVAS -->
+<section id="normativas" class="sec">
+  <div class="wrap">
+    <div class="reveal"><div class="sec-tag">Normativas y sostenibilidad</div><div class="sec-title">Estandares que cumplimos</div></div>
+    <div class="norm-grid">
+      <div class="norm-card reveal d1"><div class="norm-code">ISO/IEC 11801:2017</div><div class="norm-name">Cableado de edificios</div><p class="norm-desc">Clase EA (Cat 6A). Certificacion toma a toma con informe entregado al cliente.</p></div>
+      <div class="norm-card reveal d2"><div class="norm-code">ISO/IEC 14763-2 / 14763-3</div><div class="norm-name">Instalacion y prueba</div><p class="norm-desc">Radios de curvatura, separacion de cables electricos y certificacion del cableado.</p></div>
+      <div class="norm-card reveal d3"><div class="norm-code">ISO 9001:2015</div><div class="norm-name">Gestion de calidad</div><p class="norm-desc">Documentacion y trazabilidad en cada fase con control de calidad reproducible.</p></div>
+      <div class="norm-card reveal d4"><div class="norm-code">ISO/IEC 27001:2022</div><div class="norm-name">Seguridad de informacion</div><p class="norm-desc">Segmentacion por VLANs y aislamiento de invitados alineados con esta norma.</p></div>
+      <div class="norm-card reveal d5"><div class="norm-code">RD 110/2015 &mdash; RAEE</div><div class="norm-name">Residuos electronicos</div><p class="norm-desc">~15-20 kg gestionados en punto limpio autorizado de Paiporta.</p></div>
+      <div class="norm-card reveal d6"><div class="norm-code">TIA-606</div><div class="norm-name">Estandar de etiquetado</div><p class="norm-desc">Etiquetado en ambos extremos de cada cable para mantenimiento sencillo.</p></div>
+    </div>
+    <div class="sost-grid reveal">
+      <div class="sost-card"><span class="sost-icon">&#9889;</span><div class="sost-title">Eficiencia energetica</div><p class="sost-desc">Green Ethernet en switches · APs de 12W max · NAS en hibernacion fuera del horario laboral.</p></div>
+      <div class="sost-card"><span class="sost-icon">&#9851;</span><div class="sost-title">Gestion de residuos</div><p class="sost-desc">Cables, embalajes y equipos a gestor autorizado conforme al RD 110/2015.</p></div>
+      <div class="sost-card"><span class="sost-icon">&#8734;</span><div class="sost-title">Longevidad</div><p class="sost-desc">Cat 6A garantiza 10+ anos sin obsolescencia. Gestion remota reduce desplazamientos.</p></div>
+    </div>
+  </div>
+</section>
+<div class="px-div"></div>
+
+<!-- PRESUPUESTO -->
+<section id="presupuesto" class="sec sec-black">
+  <div class="amb-grid" style="opacity:.3;"></div>
+  <div class="wrap">
+    <div class="reveal"><div class="sec-tag">Presupuesto</div><div class="sec-title">Desglose economico</div></div>
+    <div class="budget-cols">
+      <div class="reveal-left">
+        <div class="budget-block">
+          <div class="budget-label">// Permisos &mdash; Ayuntamiento de Paiporta</div>
+          <div class="budget-row"><span class="brow-name">Tasa licencia obra menor</span><span class="brow-val">60,00 &euro;</span></div>
+          <div class="budget-row"><span class="brow-name">ICIO (4% s/ presupuesto obra)</span><span class="brow-val">32,00 &euro;</span></div>
+          <div class="budget-row" style="border-top:1px solid rgba(168,85,247,.4);"><span class="brow-name" style="color:var(--white);font-weight:700;">Total permisos</span><span class="brow-val">92,00 &euro;</span></div>
+        </div>
+        <div class="budget-block">
+          <div class="budget-label">// Dominio y Hosting (ano 1)</div>
+          <div class="budget-row"><span class="brow-name">Dominio .es</span><span class="brow-val">8,99 &euro;</span></div>
+          <div class="budget-row"><span class="brow-name">Hosting SiteGround Start</span><span class="brow-val">71,88 &euro;</span></div>
+          <div class="budget-row" style="border-top:1px solid rgba(168,85,247,.4);"><span class="brow-name" style="color:var(--white);font-weight:700;">Total dominio + hosting</span><span class="brow-val">80,87 &euro;</span></div>
+        </div>
+        <div class="budget-block">
+          <div class="budget-label">// Materiales</div>
+          <div class="budget-sub-row"><span class="brow-name">Cableado y conectividad pasiva</span><span class="brow-val">1.009,00 &euro;</span></div>
+          <div class="budget-sub-row"><span class="brow-name">Equipos activos de red</span><span class="brow-val">1.287,00 &euro;</span></div>
+          <div class="budget-sub-row"><span class="brow-name">Servidor y almacenamiento</span><span class="brow-val">855,00 &euro;</span></div>
+          <div class="budget-sub-row"><span class="brow-name">Equipos de comunicacion</span><span class="brow-val">777,00 &euro;</span></div>
+          <div class="budget-row" style="border-top:1px solid rgba(168,85,247,.4);"><span class="brow-name" style="color:var(--white);font-weight:700;">Total materiales</span><span class="brow-val">3.928,00 &euro;</span></div>
+        </div>
+        <div class="budget-block">
+          <div class="budget-label">// Mano de obra &mdash; 96h</div>
+          <div class="budget-sub-row"><span class="brow-name">Selva Twitch &middot; 38h &middot; 35&euro;/h</span><span class="brow-val">1.330,00 &euro;</span></div>
+          <div class="budget-sub-row"><span class="brow-name">Hselva 217 &middot; 33h &middot; 28&euro;/h</span><span class="brow-val">924,00 &euro;</span></div>
+          <div class="budget-sub-row"><span class="brow-name">Hector Selva &middot; 25h &middot; 25&euro;/h</span><span class="brow-val">625,00 &euro;</span></div>
+          <div class="budget-row" style="border-top:1px solid rgba(168,85,247,.4);"><span class="brow-name" style="color:var(--white);font-weight:700;">Total mano de obra</span><span class="brow-val">2.879,00 &euro;</span></div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--pp-bright);margin-bottom:1.5rem;">// Resumen</div>
+        <div class="budget-row"><span class="brow-name">Permisos</span><span class="brow-val">92,00 &euro;</span></div>
+        <div class="budget-row"><span class="brow-name">Dominio + Hosting</span><span class="brow-val">80,87 &euro;</span></div>
+        <div class="budget-row"><span class="brow-name">Materiales</span><span class="brow-val">3.928,00 &euro;</span></div>
+        <div class="budget-row"><span class="brow-name">Mano de obra</span><span class="brow-val">2.879,00 &euro;</span></div>
+        <div class="budget-row" style="border-top:2px solid rgba(168,85,247,.5);margin-top:.4rem;padding-top:.9rem;"><span class="brow-name" style="color:var(--white);font-weight:700;font-size:15px;">Base imponible</span><span class="brow-val" style="font-size:15px;color:var(--white);">6.979,87 &euro;</span></div>
+        <div class="budget-row" style="border-bottom:none;"><span class="brow-name" style="color:#555;">IVA (21%)</span><span class="brow-val" style="color:#555;">1.465,77 &euro;</span></div>
+        <div class="budget-total"><div class="tot-label">TOTAL CON IVA</div><div class="tot-num">8.445,64 &euro;</div></div>
+        <p class="budget-note">Valido 30 dias. Cuota Movistar (59,90&euro;/mes) no incluida &mdash; contrato directo cliente-operadora. Empresa: Type &amp; Fix SL.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="px-div"></div>
+
+<!-- EQUIPO -->
+<section id="equipo" class="sec sec-dark">
+  <div class="amb-grid" style="opacity:.4;"></div>
+  <div class="wrap">
+    <div class="reveal"><div class="sec-tag">Nuestro equipo</div><div class="sec-title">Los que lo hacen posible</div></div>
+    <div class="team-wrap">
+      <div class="team-card reveal d1"><div class="t-avatar">ST</div><div class="t-name">Selva Twitch</div><div class="t-role">Jefa de Proyecto &amp; Senior</div><div class="t-hours">38h &middot; 35 &euro;/h</div><ul class="t-bullets"><li>Arquitectura y diseno de red</li><li>Configuracion VLANs y QoS</li><li>Certificacion y entrega final</li></ul></div>
+      <div class="team-card reveal d2"><div class="t-avatar">H2</div><div class="t-name">Hselva 217</div><div class="t-role">Tecnico de Instalaciones</div><div class="t-hours">33h &middot; 28 &euro;/h</div><ul class="t-bullets"><li>Cableado estructurado</li><li>Montaje rosetas y canaletas</li><li>Crimpado y etiquetado TIA-606</li></ul></div>
+      <div class="team-card reveal d3"><div class="t-avatar">HS</div><div class="t-name">Hector Selva</div><div class="t-role">Tecnico de Soporte</div><div class="t-hours">25h &middot; 25 &euro;/h</div><ul class="t-bullets"><li>Montaje fisico de equipos</li><li>Pruebas de conectividad</li><li>Documentacion tecnica</li></ul></div>
+    </div>
+  </div>
+</section>
+<div class="px-div"></div>
+
+<!-- CONTACTO -->
+<section id="contacto" class="sec">
+  <div class="wrap">
+    <div class="contact-layout">
+      <div class="reveal-left">
+        <div class="sec-tag">Contacto</div>
+        <div class="contact-big">Tienes un proyecto?<br><span class="hl">Escribenos.</span></div>
+        <p class="contact-sub">Valencia y toda la Comunitat Valenciana. Instalaciones de red, armarios de comunicaciones y soporte tecnico.</p>
+        <a href="mailto:typeandfix@gmail.com" class="btn btn-primary">Enviar email</a>
+      </div>
+      <div class="c-items reveal-right">
+        <div class="c-item"><div class="c-icon">TLF</div><div><div class="c-label">Telefono</div><div class="c-val">611 139 183</div></div></div>
+        <div class="c-item"><div class="c-icon">@</div><div><div class="c-label">Email</div><div class="c-val">typeandfix@gmail.com</div></div></div>
+        <div class="c-item"><div class="c-icon">IG</div><div><div class="c-label">Instagram</div><div class="c-val">@typeandfix_</div></div></div>
+        <div class="c-item"><div class="c-icon">HQ</div><div><div class="c-label">Ubicacion</div><div class="c-val">Valencia, Comunitat Valenciana</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">TYPE<span>&</span>FIX</div>
+  <div class="f-copy">&copy; 2026 Type &amp; Fix SL</div>
+  <div class="f-social">@TYPEANDFIX_</div>
+</footer>
+
+<script>
+const pc=document.getElementById('particles');
+for(let i=0;i<28;i++){const p=document.createElement('div');p.className='p';const x=Math.random()*100,y=Math.random()*100,tx=(Math.random()-.5)*80,ty=-(60+Math.random()*140);p.style.cssText=`left:${x}%;top:${y}%;--d:${5+Math.random()*10}s;--delay:${Math.random()*8}s;--tx:${tx}px;--ty:${ty}px;width:${2+Math.random()*3}px;height:${2+Math.random()*3}px;background:rgba(168,85,247,${.3+Math.random()*.4});`;pc.appendChild(p);}
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)setTimeout(()=>x.target.classList.add('vis'),40);});},{threshold:.07});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>obs.observe(el));
+const nav=document.querySelector('nav');
+window.addEventListener('scroll',()=>{nav.style.background=scrollY>60?'rgba(8,8,18,.97)':'rgba(8,8,18,.85)';});
+window.addEventListener('load',()=>{setTimeout(()=>{function cnt(id,to,suf){const el=document.getElementById(id);if(!el)return;let s=0,step=to/55;const t=setInterval(()=>{s+=step;if(s>=to){s=to;clearInterval(t);}el.textContent=Math.floor(s)+suf;},16);}cnt('c1',96,'h');cnt('c2',6,'');cnt('c3',22,'');},500);});
+</script>
+</body>
+</html>
