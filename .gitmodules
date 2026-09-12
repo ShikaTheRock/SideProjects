@@ -1,0 +1,3 @@
+[submodule "Py_PolishKCalc"]
+	path = Py_PolishKCalc
+	url = https://github.com/ShikaTheRock/Py_PolishKCalc.git
