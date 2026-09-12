@@ -1,3 +1,6 @@
 [submodule "Py_PolishKCalc"]
 	path = Py_PolishKCalc
 	url = https://github.com/ShikaTheRock/Py_PolishKCalc.git
+[submodule "Web_New"]
+	path = Web_New
+	url = https://github.com/ShikaTheRock/Web_New.git
